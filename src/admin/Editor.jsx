@@ -1,9 +1,9 @@
 // src/admin/Editor.jsx
 import { useState } from "react";
-import * as data from "../data/pizzeriaProducts";
+import * as data from "../data/heladeriaProducts";
 
 export default function Editor() {
-  const categoryKeys = Object.keys(data); // ej: ["pizzas", "empanadas", "bebidas", "postres"]
+  const categoryKeys = Object.keys(data); // ej: ["helados", "batidos", "cafeteria", "postres"]
 
   const [products, setProducts] = useState(() => {
     const all = [];
@@ -32,7 +32,7 @@ export default function Editor() {
   };
 
   const handleAddProduct = () => {
-    const defaultCategoryKey = categoryKeys[0] || "pizzas";
+    const defaultCategoryKey = categoryKeys[0] || "helados";
 
     const newProduct = {
       id: `new-${Date.now()}`,
@@ -101,7 +101,7 @@ export default function Editor() {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "pizzeriaProducts.js";
+    a.download = "heladeriaProducts.js"; // Changed logic
     a.click();
   };
 
@@ -110,7 +110,7 @@ export default function Editor() {
       <h1 className="mb-3">🛠️ Editor de productos (solo admin)</h1>
       <p className="text-muted">
         Modificá los datos, agregá o duplicá productos y descargá el archivo
-        <code> pizzeriaProducts.js</code> actualizado para reemplazar en tu proyecto.
+        <code> heladeriaProducts.js</code> actualizado para reemplazar en tu proyecto.
       </p>
 
       <div className="d-flex justify-content-between align-items-center mb-3">

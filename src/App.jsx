@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HeroCarousel from "./components/HeroCarousel";
@@ -7,8 +6,9 @@ import Cart from "./components/Cart";
 import CheckoutForm from "./components/CheckoutForm";
 import WhatsAppButton from "./components/WhatsAppButton";
 import UpsellModal from "./components/UpsellModal";
-// 👉 Usamos solo extrasPizza para el upsell
-import { extrasPizza } from "./data/pizzeriaProducts";
+
+// 👉 Usamos toppings para el upsell de heladeria
+import { toppings } from "./data/heladeriaProducts";
 
 import { clientConfig } from "./config/clientConfig";
 
@@ -28,8 +28,8 @@ function App() {
   const [isClosed, setIsClosed] = useState(false);
   const [lastProduct, setLastProduct] = useState(null);
 
-  // ⬇️ Ahora las sugerencias del modal son los extras de pizza
-  const upsellItems = extrasPizza;
+  // ⬇️ Upsell items son los toppings
+  const upsellItems = toppings;
 
   // 🔔 Horario
   useEffect(() => {
@@ -88,12 +88,9 @@ function App() {
     });
 
     const mainCategories = [
-      "Pizzas",
-      "Hamburguesas",
-      "Sándwiches",
-      "Sandwiches",
-      "Milanesas",
-      "Combos",
+      "Helados",
+      "Batidos",
+      "Postres",
     ];
 
       const shouldOpenUpsell =

@@ -1,14 +1,14 @@
 // src/config/clientConfig.js
 export const clientConfig = {
-  nombre: "Hamburguesería",          // Nombre del local
-  tipo: "hamburgueseria",                     // pizzeria | hamburgueseria | heladeria | etc.
+  nombre: "Heladería",          // Nombre del local
+  tipo: "heladeria",                     // pizzeria | hamburgueseria | heladeria | etc.
 
   whatsapp: "+5491162123307",           // Teléfono del negocio (formato internacional)
 
   logo: "/images/logoburga.png",    // Ruta dentro de /public (ej: public/images/logo-pizzeria.png)
 
   colores: {
-    primario: "#f97316",   // naranja
+    primario: "#ec4899",   // rosa
     secundario: "#111827", // gris muy oscuro
     textoClaro: "#ffffff",
   },

@@ -1,13 +1,12 @@
-// src/components/Menu.jsx
 import { useState, useRef } from "react";
-import { hamburguesas, papas, bebidas, postres } from "../data/pizzeriaProducts";
+import { helados, batidos, cafeteria, postres } from "../data/heladeriaProducts";
 
 export default function Menu({ onAddToCart, isClosed }) {
   const categories = [
-    { id: "hamburguesas", label: "Hamburguesas 🍔", products: hamburguesas },
-    { id: "papas", label: "Papas y acompañamientos 🍟", products: papas },
-    { id: "bebidas", label: "Bebidas 🥤", products: bebidas },
-    { id: "postres", label: "Postres 🍨", products: postres },
+    { id: "helados", label: "Helados 🍦", products: helados },
+    { id: "batidos", label: "Batidos 🥤", products: batidos },
+    { id: "cafeteria", label: "Cafetería ☕", products: cafeteria },
+    { id: "postres", label: "Postres 🧁", products: postres },
   ];
 
   // categoría abierta en MOBILE
