@@ -10,20 +10,20 @@ export default function HeroCarousel() {
     "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg";
 
   // Textos con fallback: si no hay en config, usamos los que ya tenías
-  const slide1Title = hero?.slides?.[0]?.titulo || `${nombre} 🍕`;
+  const slide1Title = hero?.slides?.[0]?.titulo || `${nombre} `;
   const slide1Subtitle =
     hero?.slides?.[0]?.subtitulo ||
-    "Pedí tus hamburgesas favoritas y mandá el pedido por WhatsApp.";
+    "xxxxxxxxxxxxxxxxxxxxxxxxxx";
 
-  const slide2Title = hero?.slides?.[1]?.titulo || "Hamburgesas que si llenan";
+  const slide2Title = hero?.slides?.[1]?.titulo || "xxxxxxxxx";
   const slide2Subtitle =
     hero?.slides?.[1]?.subtitulo ||
-    "Las mejores hamburgesas de zona sur.";
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.";
 
-  const slide3Title = hero?.slides?.[2]?.titulo || "Promos todos los días";
+  const slide3Title = hero?.slides?.[2]?.titulo || "xxxxxxxxxx";
   const slide3Subtitle =
     hero?.slides?.[2]?.subtitulo ||
-    "2x1, combos individuales, familiares y mucho más.";
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.";
 
   return (
     <section id="hero" className="bg-dark">
