@@ -1,81 +1,81 @@
 import { useState, useRef } from "react";
 import { helados, batidos, cafeteria, postres } from "../data/heladeriaProducts";
+import FlavorSelectionModal from "./FlavorSelectionModal";
+import FlavorsViewModal from "./FlavorsViewModal";
 
 export default function Menu({ onAddToCart, isClosed }) {
   const categories = [
-    { id: "helados", label: "Helados 🍦", products: helados },
-    { id: "batidos", label: "Batidos 🥤", products: batidos },
-    { id: "cafeteria", label: "Cafetería ☕", products: cafeteria },
-    { id: "postres", label: "Postres 🧁", products: postres },
+    { id: "helados", label: "Helados", products: helados },
+    { id: "batidos", label: "Batidos", products: batidos },
   ];
 
-  // categoría abierta en MOBILE
-  const [openCategory, setOpenCategory] = useState(null);
-
-  // refs para hacer scroll suave a la categoría abierta
+  // categoría abierta en MOBILE (ya no tan necesario si es todo grid, pero lo mantenemos por si acaso o simplificamos)
+  // Al cambiar a un diseño más "landing" con secciones claras, podemos mostrar todo abierto o mantener la navegación.
+  // La referencia sugiere una vista tipo catálogo. Vamos a mostrar todo en secciones verticales.
+  
+  const [openCategory, setOpenCategory] = useState("helados"); // Default open or unused if we show all
   const categoryRefs = useRef({});
 
-  const handleToggleCategory = (id) => {
-    setOpenCategory((prev) => {
-      // si ya está abierta → la cierro, si no → la abro
-      const next = prev === id ? null : id;
+  // Estado para el modal de gustos
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewFlavorsOpen, setIsViewFlavorsOpen] = useState(false);
+  const [selectedProductForModal, setSelectedProductForModal] = useState(null);
 
-      // solo hacemos scroll en mobile y si la estamos abriendo
-      if (next && typeof window !== "undefined" && window.innerWidth < 768) {
-        // esperamos a que termine la animación de abrir/cerrar
-        setTimeout(() => {
-          const el = categoryRefs.current[next];
-          if (el) {
-            // posición absoluta del contenedor en la página
-            const offset = el.offsetTop - 120; // ajustá 120 si querés más arriba/abajo
-            window.scrollTo({ top: offset, behavior: "smooth" });
-          }
-        }, 350); // tiempo para que se acomode el layout
-      }
-
-      return next;
-    });
+  const handleAddToCartClick = (item) => {
+    const itemsWithFlavors = [
+      "hel-1kg", "hel-500", "hel-250",
+      "milkshake-vainilla", "milkshake-frutilla", "milkshake-chocolate"
+    ];
+    if (itemsWithFlavors.includes(item.id)) {
+      setSelectedProductForModal(item);
+      setIsModalOpen(true);
+    } else {
+      onAddToCart(item);
+    }
   };
 
+  const handleFlavorConfirm = (flavors) => {
+    if (selectedProductForModal) {
+      const itemWithFlavors = {
+        ...selectedProductForModal,
+        description: `${selectedProductForModal.description} Gustos: ${flavors.join(", ")}.`,
+      };
+      onAddToCart(itemWithFlavors);
+    }
+    setIsModalOpen(false);
+    setSelectedProductForModal(null);
+  };
+
+  // Renderizado de tarjeta VERTICAL (Grid)
   const renderProductCard = (item) => (
-    <div key={item.id} className="card mb-3 menu-product-card shadow-sm">
-      <div className="row g-0 align-items-center">
-        {/* FOTO */}
-        <div className="col-3">
-          <img
+    <div key={item.id} className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+      <div className="card h-100 border-0 shadow-sm product-card">
+        <div className="position-relative" style={{ height: "220px", overflow: "hidden" }}>
+            <img
             src={item.img}
             alt={item.name}
-            className="img-fluid rounded-start"
-            style={{
-              objectFit: "cover",
-              width: "100%",
-              height: "80px",
-            }}
-          />
+            className="w-100 h-100"
+            style={{ objectFit: "cover", transition: "transform 0.3s ease" }}
+            />
         </div>
-
-        {/* CONTENIDO */}
-        <div className="col-9">
-          <div className="card-body py-2 d-flex justify-content-between align-items-start gap-2">
-            <div>
-              <h6 className="card-title mb-1 fw-semibold">{item.name}</h6>
-              {item.description && (
-                <p className="card-text mb-1 small text-muted">
-                  {item.description}
-                </p>
-              )}
-              <div className="fw-bold">${item.price}</div>
-            </div>
-
-            <div className="text-end">
-              <button
-                className="btn btn-success btn-sm"
+        
+        <div className="card-body d-flex flex-column text-center p-4">
+          <h5 className="card-title fw-bold mb-2 text-dark">{item.name}</h5>
+          {item.description && (
+            <p className="card-text text-muted small mb-3 flex-grow-1">
+              {item.description}
+            </p>
+          )}
+          
+          <div className="mt-auto">
+            <h5 className="fw-bold text-primary mb-3">${item.price}</h5>
+            <button
+                className="btn btn-outline-dark rounded-pill w-100 fw-semibold"
                 disabled={isClosed}
-                onClick={() => onAddToCart(item)}
-              >
-                {isClosed ? "Cerrado" : "Agregar"}
-              </button>
-            </div>
+                onClick={() => handleAddToCartClick(item)}
+            >
+                {isClosed ? "Cerrado" : "Agregar +"}
+            </button>
           </div>
         </div>
       </div>
@@ -83,74 +83,46 @@ export default function Menu({ onAddToCart, isClosed }) {
   );
 
   return (
-    <section id="menu" className="py-4 bg-light">
-      <div className="container-fluid px-3 px-lg-4">
-        <h2 className="mb-3 text-center">Menú</h2>
-
-        {/* === LISTA DE CATEGORÍAS (ESTILO APP) – SOLO MOBILE === */}
-        <div className="d-md-none mb-3 menu-category-strip">
-          {categories.map((cat) => {
-            const isActive = openCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => handleToggleCategory(cat.id)}
-                className={`menu-category-pill ${
-                  isActive ? "menu-category-pill-active" : ""
-                }`}
-              >
-                <span className="flex-grow-1 text-start">
-                  <span className="d-block fw-semibold">{cat.label}</span>
-                  <small className="text-muted">
-                    {cat.products.length} producto
-                    {cat.products.length !== 1 ? "s" : ""}
-                  </small>
-                </span>
-                <span className="menu-cat-icon">
-                  {isActive ? "−" : "+"}
-                </span>
-              </button>
-            );
-          })}
+    <section id="menu" className="py-5 bg-light">
+      <div className="container">
+        {/* Cabecera minimalista */}
+        <div className="text-center mb-5">
+           <h2 className="display-4 fw-bold text-uppercase ls-1">Nuestro Menú</h2>
+           <div className="d-inline-block bg-warning mb-3" style={{width: '60px', height: '4px'}}></div>
+           <div>
+             <button 
+               className="btn btn-outline-dark rounded-pill px-4 fw-bold"
+               onClick={() => setIsViewFlavorsOpen(true)}
+             >
+               Ver Todos los Gustos 🍦
+             </button>
+           </div>
         </div>
 
-        {/* === PRODUCTOS POR CATEGORÍA === */}
-        {categories.map((cat) => {
-          const isOpenMobile = openCategory === cat.id;
-
-          return (
-            <div
-              key={cat.id}
-              className="mb-4"
-              ref={(el) => (categoryRefs.current[cat.id] = el)} // ref en el contenedor de la categoría
-            >
-              {/* Título de categoría (solo desktop) */}
-              <div className="d-none d-md-flex align-items-baseline mb-2">
-                <h4 className="me-2 mb-0">{cat.label}</h4>
-                <small className="text-muted">
-                  {cat.products.length} producto
-                  {cat.products.length !== 1 ? "s" : ""}
-                </small>
-              </div>
-
-              {/* MOBILE: contenedor con animación de apertura/cierre */}
-              <div
-                className={`d-md-none menu-category-collapse ${
-                  isOpenMobile ? "show" : ""
-                }`}
-              >
-                {cat.products.map((item) => renderProductCard(item))}
-              </div>
-
-              {/* DESKTOP: siempre visibles todas las categorías */}
-              <div className="d-none d-md-block">
-                {cat.products.map((item) => renderProductCard(item))}
-              </div>
+        {categories.map((cat) => (
+          <div key={cat.id} className="mb-5" ref={(el) => (categoryRefs.current[cat.id] = el)}>
+            <h3 className="mb-4 fw-bold text-start border-start border-4 border-warning ps-3">
+              {cat.label}
+            </h3>
+            
+            <div className="row">
+              {cat.products.map((item) => renderProductCard(item))}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
+      
+      <FlavorSelectionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleFlavorConfirm}
+        product={selectedProductForModal}
+      />
+      <FlavorsViewModal
+        isOpen={isViewFlavorsOpen}
+        onClose={() => setIsViewFlavorsOpen(false)}
+      />
     </section>
   );
 }
+
