@@ -105,13 +105,13 @@ export const toppings = [
   {
     id: "top-salsa-choc",
     name: "Salsa de Chocolate",
-    price: 500,
+    price: 0,
     category: "Toppings",
   },
   {
     id: "top-salsa-dl",
     name: "Salsa Dulce de Leche",
-    price: 500,
+    price: 0,
     category: "Toppings",
   },
   {

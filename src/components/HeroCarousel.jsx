@@ -22,7 +22,7 @@ export default function HeroCarousel() {
 
   const slide3Title = hero?.slides?.[2]?.titulo || "Promos todos los días";
   const slide3Subtitle =
-    hero?.slides?.[2]?.subtitulo || 
+    hero?.slides?.[2]?.subtitulo ||
     "2x1, combos individuales, familiares y mucho más.";
 
   return (
@@ -57,6 +57,7 @@ export default function HeroCarousel() {
                 className="d-block w-100"
                 alt="Slide 2"
                 style={{ maxHeight: "520px", objectFit: "cover" }}
+                loading="lazy"
               />
               <div className="carousel-caption d-block">
                 <div className="bg-dark bg-opacity-50 rounded-3 px-3 py-2 d-inline-block">
@@ -73,6 +74,7 @@ export default function HeroCarousel() {
                 className="d-block w-100"
                 alt="Slide 3"
                 style={{ maxHeight: "520px", objectFit: "cover" }}
+                loading="lazy"
               />
               <div className="carousel-caption d-block">
                 <div className="bg-dark bg-opacity-50 rounded-3 px-3 py-2 d-inline-block">

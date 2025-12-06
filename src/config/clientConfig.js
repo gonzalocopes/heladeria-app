@@ -5,7 +5,7 @@ export const clientConfig = {
 
   whatsapp: "+5491162123307",           // Teléfono del negocio (formato internacional)
 
-  logo: "/images/logoburga.png",    // Ruta dentro de /public (ej: public/images/logo-pizzeria.png)
+  logo: "/images/logoh.png",    // Ruta dentro de /public (ej: public/images/logo-pizzeria.png)
 
   colores: {
     primario: "#ec4899",   // rosa
@@ -14,14 +14,14 @@ export const clientConfig = {
   },
 
   hero: {
-    fondo: "/images/fondoburga.jpg",   // Imagen de fondo (ponela en /public/images/)
+    fondo: "/images/logohelado.jpg",   // Imagen de fondo (ponela en /public/images/)
   },
   // 🔔 NUEVO: configuración de horario
   //horario: {
-    //enabled: true, // si lo ponés en false, se desactiva el modo cerrado
-   // apertura: "14:00", // hora de apertura (24 hs)
-    //cierre: "23:30",   // hora de cierre  (24 hs)
-    //mensajeCerrado:
-      //"Ahora estamos cerrados. Nuestro horario: de 19:00 a 23:30 hs.",
+  //enabled: true, // si lo ponés en false, se desactiva el modo cerrado
+  // apertura: "14:00", // hora de apertura (24 hs)
+  //cierre: "23:30",   // hora de cierre  (24 hs)
+  //mensajeCerrado:
+  //"Ahora estamos cerrados. Nuestro horario: de 19:00 a 23:30 hs.",
   //},
 };

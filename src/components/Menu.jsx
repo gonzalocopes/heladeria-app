@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { helados, batidos, cafeteria, postres } from "../data/heladeriaProducts";
+import { helados, batidos, cafeteria, postres, toppings } from "../data/heladeriaProducts";
 import FlavorSelectionModal from "./FlavorSelectionModal";
 import FlavorsViewModal from "./FlavorsViewModal";
 
@@ -12,7 +12,7 @@ export default function Menu({ onAddToCart, isClosed }) {
   // categoría abierta en MOBILE (ya no tan necesario si es todo grid, pero lo mantenemos por si acaso o simplificamos)
   // Al cambiar a un diseño más "landing" con secciones claras, podemos mostrar todo abierto o mantener la navegación.
   // La referencia sugiere una vista tipo catálogo. Vamos a mostrar todo en secciones verticales.
-  
+
   const [openCategory, setOpenCategory] = useState("helados"); // Default open or unused if we show all
   const categoryRefs = useRef({});
 
@@ -34,11 +34,38 @@ export default function Menu({ onAddToCart, isClosed }) {
     }
   };
 
-  const handleFlavorConfirm = (flavors) => {
+  const handleFlavorConfirm = (flavors, selectedExtras = {}) => {
     if (selectedProductForModal) {
+      // Calcular precio de extras
+      let extrasPrice = 0;
+      const extraEntries = Object.entries(selectedExtras); // [[id, qty], ...]
+
+      const extrasDescParts = [];
+
+      extraEntries.forEach(([id, qty]) => {
+        if (qty > 0) {
+          const extra = toppings.find((t) => t.id === id);
+          if (extra) {
+            extrasPrice += extra.price * qty;
+            if (qty === 1) {
+              extrasDescParts.push(extra.name);
+            } else {
+              extrasDescParts.push(`${qty}x ${extra.name}`);
+            }
+          }
+        }
+      });
+
+      const extrasNames = extrasDescParts.join(", ");
+
+      const descriptionExtras = extrasNames
+        ? ` Gustos: ${flavors.join(", ")}. Extras: ${extrasNames}.`
+        : ` Gustos: ${flavors.join(", ")}.`;
+
       const itemWithFlavors = {
         ...selectedProductForModal,
-        description: `${selectedProductForModal.description} Gustos: ${flavors.join(", ")}.`,
+        description: selectedProductForModal.description + descriptionExtras,
+        price: selectedProductForModal.price + extrasPrice,
       };
       onAddToCart(itemWithFlavors);
     }
@@ -51,14 +78,15 @@ export default function Menu({ onAddToCart, isClosed }) {
     <div key={item.id} className="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
       <div className="card h-100 border-0 shadow-sm product-card">
         <div className="position-relative" style={{ height: "220px", overflow: "hidden" }}>
-            <img
+          <img
             src={item.img}
             alt={item.name}
             className="w-100 h-100"
             style={{ objectFit: "cover", transition: "transform 0.3s ease" }}
-            />
+            loading="lazy"
+          />
         </div>
-        
+
         <div className="card-body d-flex flex-column text-center p-4">
           <h5 className="card-title fw-bold mb-2 text-dark">{item.name}</h5>
           {item.description && (
@@ -66,15 +94,15 @@ export default function Menu({ onAddToCart, isClosed }) {
               {item.description}
             </p>
           )}
-          
+
           <div className="mt-auto">
             <h5 className="fw-bold text-primary mb-3">${item.price}</h5>
             <button
-                className="btn btn-outline-dark rounded-pill w-100 fw-semibold"
-                disabled={isClosed}
-                onClick={() => handleAddToCartClick(item)}
+              className="btn btn-outline-dark rounded-pill w-100 fw-semibold"
+              disabled={isClosed}
+              onClick={() => handleAddToCartClick(item)}
             >
-                {isClosed ? "Cerrado" : "Agregar +"}
+              {isClosed ? "Cerrado" : "Agregar +"}
             </button>
           </div>
         </div>
@@ -87,16 +115,16 @@ export default function Menu({ onAddToCart, isClosed }) {
       <div className="container">
         {/* Cabecera minimalista */}
         <div className="text-center mb-5">
-           <h2 className="display-4 fw-bold text-uppercase ls-1">Nuestro Menú</h2>
-           <div className="d-inline-block bg-warning mb-3" style={{width: '60px', height: '4px'}}></div>
-           <div>
-             <button 
-               className="btn btn-outline-dark rounded-pill px-4 fw-bold"
-               onClick={() => setIsViewFlavorsOpen(true)}
-             >
-               Ver Todos los Gustos 🍦
-             </button>
-           </div>
+          <h2 className="display-4 fw-bold text-uppercase ls-1">Nuestro Menú</h2>
+          <div className="d-inline-block bg-warning mb-3" style={{ width: '60px', height: '4px' }}></div>
+          <div>
+            <button
+              className="btn btn-outline-dark rounded-pill px-4 fw-bold"
+              onClick={() => setIsViewFlavorsOpen(true)}
+            >
+              Ver Todos los Gustos 🍦
+            </button>
+          </div>
         </div>
 
         {categories.map((cat) => (
@@ -104,19 +132,20 @@ export default function Menu({ onAddToCart, isClosed }) {
             <h3 className="mb-4 fw-bold text-start border-start border-4 border-warning ps-3">
               {cat.label}
             </h3>
-            
+
             <div className="row">
               {cat.products.map((item) => renderProductCard(item))}
             </div>
           </div>
         ))}
       </div>
-      
+
       <FlavorSelectionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleFlavorConfirm}
         product={selectedProductForModal}
+        toppings={selectedProductForModal?.category === "Helados" ? toppings : []}
       />
       <FlavorsViewModal
         isOpen={isViewFlavorsOpen}

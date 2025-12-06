@@ -5,10 +5,9 @@ import Menu from "./components/Menu";
 import Cart from "./components/Cart";
 import CheckoutForm from "./components/CheckoutForm";
 import WhatsAppButton from "./components/WhatsAppButton";
-import UpsellModal from "./components/UpsellModal";
 
-// 👉 Usamos toppings para el upsell de heladeria
-import { toppings } from "./data/heladeriaProducts";
+
+
 
 import { clientConfig } from "./config/clientConfig";
 
@@ -17,19 +16,16 @@ function App() {
   const [customer, setCustomer] = useState({
     name: "",
     address: "",
-    address2:"",
+    address2: "",
     phone: "",
     deliveryMethod: "Delivery",
     paymentMethod: "Efectivo",
     comments: "",
   });
 
-  const [showUpsell, setShowUpsell] = useState(false);
-  const [isClosed, setIsClosed] = useState(false);
-  const [lastProduct, setLastProduct] = useState(null);
 
-  // ⬇️ Upsell items son los toppings
-  const upsellItems = toppings;
+
+  const [isClosed, setIsClosed] = useState(false);
 
   // 🔔 Horario
   useEffect(() => {
@@ -72,7 +68,7 @@ function App() {
     if (isClosed && clientConfig.horario?.enabled) {
       alert(
         clientConfig.horario.mensajeCerrado ||
-          "En este momento el local está cerrado."
+        "En este momento el local está cerrado."
       );
       return;
     }
@@ -87,20 +83,7 @@ function App() {
       return [...prev, { ...product, qty: 1 }];
     });
 
-    const mainCategories = [
-      "Helados",
-      "Batidos",
-      "Postres",
-    ];
 
-      const shouldOpenUpsell =
-    !fromUpsell &&
-    (mainCategories.includes(product.category) || product.upsell === true);
-
-  if (shouldOpenUpsell) {
-    setLastProduct(product);
-    setShowUpsell(true);
-  }
 
   };
 
@@ -122,9 +105,7 @@ function App() {
     0
   );
 
-  const handleAddFromUpsell = (product) => {
-    addToCart(product, { fromUpsell: true });
-  };
+
 
   return (
     <div className="bg-body-tertiary min-vh-100">
@@ -193,14 +174,8 @@ function App() {
       {/* 🧱 Separador solo mobile para que la barra roja no tape el footer */}
       <div className="d-md-none" style={{ height: "64px" }} />
 
-      {/* Modal de sugerencias */}
-      <UpsellModal
-        show={showUpsell}
-        onClose={() => setShowUpsell(false)}
-        upsellItems={upsellItems}
-        onAdd={handleAddFromUpsell}
-        lastProduct={lastProduct}
-      />
+      {/* 🧱 Separador solo mobile para que la barra roja no tape el footer */}
+      <div className="d-md-none" style={{ height: "64px" }} />
     </div>
   );
 }
