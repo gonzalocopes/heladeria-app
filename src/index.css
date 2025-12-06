@@ -73,7 +73,7 @@ button:focus-visible {
   bottom: 0;
   z-index: 1040;
   padding: 0.75rem 1rem;
-  background-color: #d63347;
+  background-color:  rgb(236, 72, 153);
   color: #fff;
   display: flex;
   justify-content: space-between;
