@@ -65,265 +65,52 @@ button:focus-visible {
   }
 }
 
-/* Barra flotante WhatsApp */
-.floating-wpp {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1040;
-  padding: 0.75rem 1rem;
-  background-color: #d63347;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+/* === UTILS === */
+.ls-1 {
+  letter-spacing: 1px;
 }
 
-.floating-wpp-label {
-  font-size: 0.95rem;
+.shadow-lg-top {
+  box-shadow: 0 -10px 20px rgba(0,0,0,0.1);
 }
 
-.floating-wpp-chip {
-  background-color: #fff;
-  color: #333;
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 0.82rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+/* === SCROLLABLE NAV === */
+.category-nav-container::-webkit-scrollbar {
+  display: none;
+}
+.category-nav-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .floating-wpp {
-    padding: 0.9rem 1.5rem;
-  }
-
-  .floating-wpp-label {
-    font-size: 1rem;
-  }
-
-  .floating-wpp-chip {
-    padding: 6px 14px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .floating-wpp {
-    display: none !important;
-  }
-}
-
-/* === Menú estilo app actual === */
-.menu-category-strip {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.menu-category-pill {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 0.9rem;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-  font-size: 0.9rem;
-  transition: background-color 0.15s ease, transform 0.12s ease,
-    box-shadow 0.12s ease;
-}
-
-.menu-category-pill:active {
-  transform: scale(0.98);
-}
-
-.menu-category-pill-active {
-  background-color: #ffeded;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.menu-cat-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  border: 1px solid #ddd;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1rem;
-  background-color: #fff;
-}
-
-.menu-product-card {
-  border: none;
+/* === CARD STYLES === */
+.product-card {
   border-radius: 12px;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
-@media (min-width: 768px) {
-  .menu-product-card {
-    border-radius: 10px;
+.product-card:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
   }
 }
 
-.menu-category-collapse {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.25s ease;
-}
-
-.menu-category-collapse.show {
-  max-height: 1000px;
-  opacity: 1;
-}
-
-/* Hover extra */
-.menu-category-pill {
-  width: 100%;
-  border: none;
-  background: #ffffff;
-  border-radius: 999px;
-  padding: 0.75rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-    background-color 0.15s ease;
-}
-
-.menu-category-pill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-}
-
-.menu-cat-icon {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-/* iOS Fix */
-.menu-category-pill span {
-  color: #000 !important;
-}
-
-.menu-category-pill .fw-semibold {
-  color: #000 !important;
-}
-
-.menu-category-pill small {
-  color: #444 !important;
-}
-
-.menu-cat-icon {
-  color: #000 !important;
-  border-color: #ccc !important;
-}
-
-.menu-category-pill-active {
-  background-color: #ffe9e9 !important;
-}
-
-/* ============================================================
-   🔥 ESTILOS PREMIUM (Opción C — tipo Rappi / PedidosYa)
-   Estas reglas se agregan al final para sobrescribir lo anterior
-   ============================================================ */
-
-.menu-category-strip {
-  gap: 0.75rem;
-}
-
-/* Pastilla premium */
-.menu-category-pill {
-  position: relative;
-  border-radius: 999px;
-  padding: 0.85rem 1.1rem;
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-}
-
-.menu-category-pill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
-}
-
-.menu-category-pill:active {
-  transform: scale(0.98);
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
-}
-
-/* Activa con gradiente */
-.menu-category-pill-active {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
-  box-shadow: 0 12px 32px rgba(248, 113, 113, 0.5) !important;
-  border-color: transparent !important;
-}
-
-/* Texto blanco cuando está activa */
-.menu-category-pill-active .fw-semibold,
-.menu-category-pill-active small {
-  color: #ffffff !important;
-}
-
-/* Icono premium */
-.menu-cat-icon {
-  width: 28px;
-  height: 28px;
-  background: #fff;
-  border: 1px solid #e2e8f0 !important;
-  color: #0f172a !important;
-}
-
-.menu-category-pill-active .menu-cat-icon {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.7) !important;
-  color: #fff !important;
-}
-
-
-
-/* Scroll interno para la lista del Upsell */
-.upsell-scroll-area {
-  max-height: 300px;       /* altura fija cómoda en mobile */
-  overflow-y: auto;        /* habilita scroll */
-  padding-right: 4px;      /* espacio para evitar que tape el scroll */
-}
-
-.upsell-scroll-area::-webkit-scrollbar {
-  width: 6px;
-}
-
-.upsell-scroll-area::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
-}
-
-.upsell-scroll-area::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-/* Ajuste general */
+/* === HERO CAROUSEL ADAPTATION === */
 .carousel-item img {
   object-position: center center;
 }
 
-/* AJUSTE SOLO PARA CELULAR */
 @media (max-width: 768px) {
   .carousel-item img {
-    height: 320px !important;     /* más bajo para que no quede tan "alta" la imagen */
+    height: 250px !important;     
     object-fit: cover !important;
-    object-position: center 40% !important; /* 📌 mueve el recorte hacia abajo */
   }
 }
 
@@ -336,39 +123,28 @@ button:focus-visible {
   background: linear-gradient(transparent, rgba(0,0,0,0.6));
 }
 
-/* === PREMIUM PRODUCT CARDS === */
-.product-card {
-  border-radius: 16px;
-  background: #fff;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
+/* === MOBILE MODAL === */
+@media (max-width: 576px) {
+  .modal-fullscreen-sm-down {
+    width: 100vw;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+  }
+  
+  .modal-fullscreen-sm-down .modal-content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .modal-dialog-scrollable .modal-content {
+      max-height: 100%;
+      overflow: hidden;
+  }
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
-}
-
-.product-card img {
-  transition: transform 0.5s ease;
-}
-
-.product-card:hover img {
-  transform: scale(1.05); /* Zoom effect */
-}
-
-.product-card .btn-outline-dark {
-  border-width: 2px;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-}
-
-.product-card .btn-outline-dark:hover {
-  background-color: #000;
-  color: #fff;
-}
-
-.ls-1 {
-  letter-spacing: 2px;
+/* === Sticky Logic Fixes === */
+.scroll-mt-offset {
+  scroll-margin-top: 140px; /* Asegura que el título no quede tapado por el header sticky */
 }

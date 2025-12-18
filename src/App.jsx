@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import "./cards.css"; // Nuevos estilos de tarjetas
 import Navbar from "./components/Navbar";
 import HeroCarousel from "./components/HeroCarousel";
 import Menu from "./components/Menu";
 import Cart from "./components/Cart";
 import CheckoutForm from "./components/CheckoutForm";
 import WhatsAppButton from "./components/WhatsAppButton";
+import MobileCartButton from "./components/MobileCartButton";
+import MobileCartModal from "./components/MobileCartModal";
 
 
 
@@ -107,6 +110,8 @@ function App() {
 
 
 
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+
   return (
     <div className="bg-body-tertiary min-vh-100">
       <Navbar cartCount={cartCount} />
@@ -119,63 +124,76 @@ function App() {
 
       <HeroCarousel />
 
-      {/* margen top + algo de espacio por la barra flotante */}
       <main
-        className="py-5"
+        className="py-3"
         id="pedido"
-        style={{ marginTop: "0px", paddingBottom: "60px" }}
+        style={{ paddingBottom: "80px" }}
       >
-        <div className="container-fluid px-4 px-lg-5">
-          <div className="row">
+        <div className="container-fluid px-0 px-lg-5">
+          <div className="row g-0 g-lg-4">
             {/* Menú */}
-            <div className="col-12 col-lg-7 mb-4 mb-lg-0">
+            <div className="col-12 col-lg-8 mb-4 mb-lg-0">
               <Menu onAddToCart={addToCart} isClosed={isClosed} />
             </div>
 
-            {/* Carrito + datos + botón verde WhatsApp */}
-            <section id="cart" className="col-12 col-lg-5">
-              <Cart
-                cart={cart}
-                total={total}
-                onRemove={removeFromCart}
-                onChangeQty={changeQty}
-              />
-              <CheckoutForm
-                customer={customer}
-                onChange={setCustomer}
-              />
-              <WhatsAppButton
-                cart={cart}
-                total={total}
-                customer={customer}
-                isClosed={isClosed}
-              />
+            {/* Carrito Desktop */}
+            <section id="cart" className="d-none d-lg-block col-lg-4">
+              <div className="sticky-top" style={{ top: "90px", zIndex: 1000 }}>
+                <Cart
+                  cart={cart}
+                  total={total}
+                  onRemove={removeFromCart}
+                  onChangeQty={changeQty}
+                />
+                <CheckoutForm
+                  customer={customer}
+                  onChange={setCustomer}
+                />
+                <WhatsAppButton
+                  cart={cart}
+                  total={total}
+                  customer={customer}
+                  isClosed={isClosed}
+                />
+              </div>
             </section>
           </div>
         </div>
       </main>
 
-      {/* Footer normal */}
-      <footer className="bg-dark text-light text-center py-3 mt-auto">
-        <small>
-          © {new Date().getFullYear()}{" "}
-          Desarrollado por{" "}
-          <a
-            href="https://magozitsolutions.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-decoration-none text-info"
-          >
-            MagoZ IT Solutions
-          </a>
-        </small>
+      {/* Mobile Cart Integration */}
+      <MobileCartButton
+        cart={cart}
+        onClick={() => setIsMobileCartOpen(true)}
+      />
+
+      <MobileCartModal
+        isOpen={isMobileCartOpen}
+        onClose={() => setIsMobileCartOpen(false)}
+        cart={cart}
+        total={total}
+        onRemove={removeFromCart}
+        onChangeQty={changeQty}
+        customer={customer}
+        setCustomer={setCustomer}
+        isClosed={isClosed}
+      />
+
+      <footer className="bg-dark text-light text-center py-4 mt-auto">
+        <div className="container">
+          <p className="mb-0 small">
+            © {new Date().getFullYear()} Desarrollado por{" "}
+            <a
+              href="https://magozitsolutions.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none text-info fw-bold"
+            >
+              MagoZ IT Solutions
+            </a>
+          </p>
+        </div>
       </footer>
-
-      {/* 🧱 Separador solo mobile para que la barra roja no tape el footer */}
-      <div className="d-md-none" style={{ height: "64px" }} />
-
-      {/* 🧱 Separador solo mobile para que la barra roja no tape el footer */}
-      <div className="d-md-none" style={{ height: "64px" }} />
     </div>
   );
 }

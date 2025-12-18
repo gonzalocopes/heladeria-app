@@ -10,15 +10,15 @@ export default function HeroCarousel() {
     "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg";
 
   // Textos con fallback: si no hay en config, usamos los que ya tenías
-  const slide1Title = hero?.slides?.[0]?.titulo || `${nombre} 🍕`;
+  const slide1Title = hero?.slides?.[0]?.titulo || `${nombre} 🍦`;
   const slide1Subtitle =
     hero?.slides?.[0]?.subtitulo ||
-    "Pedí tus hamburgesas favoritas y mandá el pedido por WhatsApp.";
+    "Pedí tus gustos favoritos y mandá el pedido por WhatsApp.";
 
-  const slide2Title = hero?.slides?.[1]?.titulo || "Hamburgesas que si llenan";
+  const slide2Title = hero?.slides?.[1]?.titulo || "Helados artesanales";
   const slide2Subtitle =
     hero?.slides?.[1]?.subtitulo ||
-    "Las mejores hamburgesas de zona sur.";
+    "Los mejores helados de zona sur.";
 
   const slide3Title = hero?.slides?.[2]?.titulo || "Promos todos los días";
   const slide3Subtitle =

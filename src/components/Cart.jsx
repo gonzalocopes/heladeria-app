@@ -8,7 +8,7 @@ export default function Cart({ cart, total, onRemove, onChangeQty }) {
       <div className="card-body">
         {cart.length === 0 ? (
           <p className="text-muted mb-0">
-            Todavía no agregaste tu hamburguesa 🍔
+            Todavía no agregaste productos a tu pedido 🍦
           </p>
         ) : (
           <>
